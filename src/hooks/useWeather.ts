@@ -11,53 +11,46 @@ export const useWeather = (units: string, days: number, initialGeolocation?: Geo
 
     const [location, setLocation] = React.useState(initialGeolocation);
 
-    const loadCurrentWeatherFromCoords = (location: GeoLocation) => {
-        setLoading(true);
-        setError(null);
-
-        weather.current.setUnits(units);
-
-        weather.current.getForecastForLocation(location.lat, location.lon, days).then(data => {
-            setCurrentWeather(data);
-
-        }).catch(error => {
-            setError(error.message);
-        }).finally(() => {
-            setLoading(false);
-        })
-    }
-    const loadCurrentWeatherFromTerm = (term: string) => {
-        setLoading(true);
-        setError(null);
-
-        weather.current.setUnits(units);
-
-        weather.current.getForecastForTerm(term, days).then(data => {
-            setCurrentWeather(data);
-            setLocation(data.list[0].coord);
-
-        }).catch(error => {
-            setError(error.message);
-        }).finally(() => {
-            setLoading(false);
-        })
-    }
-
     React.useEffect(() => {
         weather.current.setApiKey(process.env.REACT_APP_OPENWEATHER_KEY || "")
     }, [])
 
     React.useEffect(() => {
         if (weather && location) {
-            return loadCurrentWeatherFromCoords(location);
+            setLoading(true);
+            setError(null);
+
+            weather.current.setUnits(units);
+
+            weather.current.getForecastForLocation(location.lat, location.lon, days).then(data => {
+                setCurrentWeather(data);
+
+            }).catch(error => {
+                setError(error.message);
+            }).finally(() => {
+                setLoading(false);
+            })
         }
-    }, [weather, location, units]);
+    }, [weather, location, units, days]);
 
     React.useEffect(() => {
         if (weather && term) {
-            return loadCurrentWeatherFromTerm(term);
+            setLoading(true);
+            setError(null);
+
+            weather.current.setUnits(units);
+
+            weather.current.getForecastForTerm(term, days).then(data => {
+                setCurrentWeather(data);
+                setLocation(data.list[0].coord);
+
+            }).catch(error => {
+                setError(error.message);
+            }).finally(() => {
+                setLoading(false);
+            })
         }
-    }, [weather, term, units])
+    }, [weather, term, units, days])
 
     React.useEffect(() => {
         if (initialGeolocation?.lat && initialGeolocation?.lon) {
