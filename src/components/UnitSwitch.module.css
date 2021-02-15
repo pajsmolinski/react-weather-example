@@ -1,0 +1,56 @@
+
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.label {
+    font-size: 12px;
+}
+
+.switch {
+    width: 22px;
+    height: 8px;
+    position: relative;
+    margin: 0 10px;
+
+    background: #282c34;
+    color: #fff;
+
+    border: 2px solid #383b43;
+    border-radius: 5px;
+
+    transition: border-color .3s ease-out;
+
+}
+
+
+.switchActive .switchDot {
+    left: 15px;
+}
+
+.switchDot {
+    height: 6px;
+    width: 6px;
+
+    position: absolute;
+    left: 1px;
+    top: 1px;
+
+    border-radius: 6px;
+    background: #383b43;
+
+    transition: left .3s ease, background-color .3s ease;
+}
+
+
+
+.wrapper:hover .switch {
+    border-color: #444447
+}
+
+.wrapper:hover .switchDot {
+    background: #444447;
+}
