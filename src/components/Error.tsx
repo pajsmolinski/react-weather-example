@@ -3,9 +3,9 @@ import React from "react";
 import style from "./Error.module.css";
 
 interface ErrorProps {
-    message: string
+  message: string;
 }
 
-export const Error: React.ComponentType<ErrorProps> = ({message}) => {
-    return <div className={style.error}>{message}</div>
-}
+export const Error: React.ComponentType<ErrorProps> = ({ message }) => {
+  return <div className={style.error}>{message}</div>;
+};

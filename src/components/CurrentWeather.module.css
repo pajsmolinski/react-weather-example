@@ -3,7 +3,10 @@
 
     display: grid;
 
-    margin: 40px 15px;
+    margin: 120px 15px;
+    padding: 15px;
+    background-color: #383b43;
+    border-radius: 5px;
 
     grid-template-areas:
         "name . ."

@@ -1,30 +1,29 @@
 import React from "react";
-import {GeoLocation} from "../weather/weather";
+import { GeoLocation } from "../weather/weather";
 
 export const useCurrentPosition = (): [GeoLocation | undefined, string] => {
-    const [position, setPosition] = React.useState<GeoLocation>();
-    const [error, setError] = React.useState<string>("");
+  const [position, setPosition] = React.useState<GeoLocation>();
+  const [error, setError] = React.useState<string>("");
 
-    const onChange: PositionCallback = ({coords}) => {
-        setPosition({
-            lat: coords.latitude.toString(),
-            lon: coords.longitude.toString(),
-        });
-    };
+  const onChange: PositionCallback = ({ coords }) => {
+    setPosition({
+      lat: coords.latitude.toString(),
+      lon: coords.longitude.toString(),
+    });
+  };
 
-    const onError: PositionErrorCallback = (error) => {
-        setError(error.message);
-    };
+  const onError: PositionErrorCallback = (error) => {
+    setError(error.message);
+  };
 
-    React.useEffect(() => {
-        if (!navigator || !navigator.geolocation) {
-            setError('Geolocation is not supported');
-            return;
-        }
+  React.useEffect(() => {
+    if (!navigator || !navigator.geolocation) {
+      setError("Geolocation is not supported");
+      return;
+    }
 
-        navigator.geolocation.getCurrentPosition(onChange, onError);
-    }, []);
+    navigator.geolocation.getCurrentPosition(onChange, onError);
+  }, []);
 
-
-    return [position, error];
-}
+  return [position, error];
+};

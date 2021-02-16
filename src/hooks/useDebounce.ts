@@ -3,39 +3,30 @@
 
 import React from "react";
 
-export function useDebounce(value: any, delay: number) {
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = React.useState(value);
 
-    const [debouncedValue, setDebouncedValue] = React.useState(value);
+  React.useEffect(
+    () => {
+      // Update debounced value after delay
 
-    React.useEffect(
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
 
-        () => {
+      // Cancel the timeout if value changes (also on delay change or unmount)
 
-            // Update debounced value after delay
+      // This is how we prevent debounced value from updating if value is changed ...
 
-            const handler = setTimeout(() => {
+      // .. within the delay period. Timeout gets cleared and restarted.
 
-                setDebouncedValue(value);
+      return () => {
+        clearTimeout(handler);
+      };
+    },
 
-            }, delay);
+    [value, delay] // Only re-call effect if value or delay changes
+  );
 
-            // Cancel the timeout if value changes (also on delay change or unmount)
-
-            // This is how we prevent debounced value from updating if value is changed ...
-
-            // .. within the delay period. Timeout gets cleared and restarted.
-
-            return () => {
-
-                clearTimeout(handler);
-
-            };
-
-        },
-
-        [value, delay] // Only re-call effect if value or delay changes
-
-    );
-
-    return debouncedValue;
+  return debouncedValue;
 }
